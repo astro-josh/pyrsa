@@ -30,9 +30,11 @@ class RSA(object):
         e - public key value e
         d - (optional) private key value d
         """
-        if all([n, e]):
+        if self.d:
+            print(f"d:{self.d}, n:{self.n}, e:{self.e}")
+        elif all([n, e]):
             self.crack(n, e)
-        elif not self.d:
+        else:
             print("Must call crack(n, e) function first or call decrypt() with"
                 " n and e parameters.")
             return
