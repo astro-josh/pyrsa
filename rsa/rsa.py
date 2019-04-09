@@ -74,6 +74,7 @@ class RSA():
 
         return None
 
+
     @staticmethod
     def modular_exponentiation(num, exp, mod):
         """
@@ -85,6 +86,7 @@ class RSA():
             result = ((result * num) % mod)
 
         return result
+
 
     @staticmethod
     def num_to_text(num):
@@ -98,6 +100,7 @@ class RSA():
 
         # +97 for 0 index
         return str(chr(c + 97) + chr(b + 97) + chr(a + 97))
+
 
     @staticmethod
     def is_prime(num):
