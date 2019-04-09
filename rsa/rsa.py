@@ -4,8 +4,15 @@ class RSA():
 
     @staticmethod
     def decrypt(c, n, e):
+        """
+        Wrapper function for decryption process.
+        Input:
+        c - ciphertext as a number (0-26 based letters)
+        n - public key value n
+        e - public key value e
+        """
         pq = RSA.find_prime_factor(n)
-        print(f"pq = {pq}")
+        print(f"p, q = {pq}")
         d = RSA.extended_euclidean(e, (pq[0] - 1) * (pq[1] - 1))
         print(f"d = {d}")
         m = RSA.modular_exponentiation(c, d, n)
@@ -14,11 +21,11 @@ class RSA():
 
     @staticmethod
     def extended_euclidean(e, pq):
-        print(f"pq in ee = {pq}")
         """
         Finds the modular inverse of a number given the number and the modulus.
         Finds d for RSA.
         """
+        print(f"p*q in ee = {pq}")
         remainder = 1
         p = 0
         mod = pq
@@ -29,7 +36,6 @@ class RSA():
         while remainder != 0:
             remainder = pq % e
             quotient = pq // e
-            print("quotient = ", quotient)
             Q.append(quotient)
 
             if p != 0 and p != 1:
@@ -50,6 +56,10 @@ class RSA():
 
     @staticmethod
     def find_prime_factor(num):
+        """
+        Finds two prime factors for a given number.
+        i.e. two numbers whose product equals the given number.
+        """
         prime_numbers = [2]
 
         # TODO: list comprehension
@@ -66,6 +76,9 @@ class RSA():
 
     @staticmethod
     def modular_exponentiation(num, exp, mod):
+        """
+        Performs modular exponentiation by repeated squaring.
+        """
         result = 1
 
         for x in range(exp):
