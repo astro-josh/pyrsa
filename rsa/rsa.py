@@ -26,8 +26,8 @@ class RSA(object):
         Wrapper function for decryption process.
         Input:
         c - ciphertext as a number
-        n - public key value n
-        e - public key value e
+        n - (optional) public key value n
+        e - (optional) public key value e
         d - (optional) private key value d
         """
         if self.d:
