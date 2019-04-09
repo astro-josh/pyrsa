@@ -1,23 +1,49 @@
 from math import sqrt
 
-class RSA():
+class RSA(object):
+    def __init__(self, n=None, e=None, d=None, pq=None):
+        self.n = n
+        self.e = e
+        self.d = d
+        self.pq = pq
 
-    @staticmethod
-    def decrypt(c, n, e):
+
+    def crack(self, n, e):
+        """
+        Find private key (d) given public key values (n, e)
+        """
+        self.n = n
+        self.e = e
+
+        self.pq = RSA.find_prime_factor(n)
+        self.d = RSA.extended_euclidean(e, (self.pq[0] - 1) * (self.pq[1] - 1))
+
+        return (self.d, self.pq)
+
+
+    def decrypt(self, c, n=None, e=None, d=None):
         """
         Wrapper function for decryption process.
         Input:
-        c - ciphertext as a number (0-26 based letters)
+        c - ciphertext as a number
         n - public key value n
         e - public key value e
+        d - (optional) private key value d
         """
-        pq = RSA.find_prime_factor(n)
-        print(f"p, q = {pq}")
-        d = RSA.extended_euclidean(e, (pq[0] - 1) * (pq[1] - 1))
-        print(f"d = {d}")
-        m = RSA.modular_exponentiation(c, d, n)
+        if all([n, e]):
+            self.crack(n, e)
+        elif not self.d:
+            print("Must call crack(n, e) function first or call decrypt() with"
+                " n and e parameters.")
+            return
+
+        print(f"p, q = {self.pq}")
+        print(f"d = {self.d}")
+
+        m = RSA.modular_exponentiation(c, self.d, self.n)
         print(m)
-        return RSA.num_to_text(m)
+        return RSA.convert_num_to_text(m)
+
 
     @staticmethod
     def extended_euclidean(e, pq):
@@ -25,7 +51,6 @@ class RSA():
         Finds the modular inverse of a number given the number and the modulus.
         Finds d for RSA.
         """
-        print(f"p*q in ee = {pq}")
         remainder = 1
         p = 0
         mod = pq
@@ -89,7 +114,7 @@ class RSA():
 
 
     @staticmethod
-    def num_to_text(num):
+    def convert_num_to_text(num):
         """
         Converts numbers back to letters by reversing the encryption a * 26^2 + b * 26 + c
         """
@@ -120,6 +145,6 @@ class RSA():
         # no factors found, number is prime
         return True
 
-
 rsa = RSA()
-print(rsa.decrypt(1394, 3127, 3))
+rsa.crack(3127, 3)
+print(rsa.decrypt(1394))
