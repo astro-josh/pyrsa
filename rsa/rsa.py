@@ -1,4 +1,6 @@
 from math import sqrt
+from tkinter import *
+from tkinter import ttk
 
 class RSA(object):
     def __init__(self, n=None, e=None, d=None, pq=None):
@@ -7,7 +9,7 @@ class RSA(object):
         self.d = d
         self.pq = pq
 
-
+    # TODO: make static, remove self reference
     def crack(self, n, e):
         """
         Find private key (d) given public key values (n, e)
@@ -39,11 +41,12 @@ class RSA(object):
                 " n and e parameters.")
             return
 
+        m = RSA.modular_exponentiation(c, self.d, self.n)
+
         print(f"p, q = {self.pq}")
         print(f"d = {self.d}")
+        print(f"m = {m}")
 
-        m = RSA.modular_exponentiation(c, self.d, self.n)
-        print(m)
         return RSA.convert_num_to_text(m)
 
 
@@ -115,18 +118,24 @@ class RSA(object):
         return result
 
 
+    def convert_to_text(numbers):
+        return [convert_num_to_text(x) for x in numbers]
+
+
     @staticmethod
     def convert_num_to_text(num):
         """
         Converts numbers back to letters by reversing the encryption a * 26^2 + b * 26 + c
         """
-        a = int(num % 26)
-        temp = (num - a) // 26
-        b = int(temp % 26)
-        c = int((temp - b) // 26)
 
-        # +97 for 0 index
-        return str(chr(c + 97) + chr(b + 97) + chr(a + 97))
+        return str(chr(num))
+        # a = int(num % 26)
+        # temp = (num - a) // 26
+        # b = int(temp % 26)
+        # c = int((temp - b) // 26)
+        #
+        # # +97 for 0 index
+        # return str(chr(c + 97) + chr(b + 97) + chr(a + 97))
 
 
     @staticmethod
@@ -144,9 +153,21 @@ class RSA(object):
             if num % x == 0:
                 return False
 
-        # no factors found, number is prime
+        # no factors found,å number is prime
         return True
 
+gui = Tk()
+gui.geometry('600x400+300+300')
+gui.title("RSA Decrypter")
+
+
+
+
+
+
+gui.mainloop()
+
+
 rsa = RSA()
-rsa.crack(3127, 3)
-print(rsa.decrypt(1394))
+rsa.crack(187, 3)
+print(rsa.decrypt(183))
