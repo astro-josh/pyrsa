@@ -10,7 +10,7 @@ class RSA(object):
         self.d = d
         self.pq = pq
 
-    # TODO: make static, remove self reference
+
     def crack(self, n, e):
         """
         Find private key (d) given public key values (n, e)
@@ -128,8 +128,6 @@ class RSA(object):
         """
         Converts numbers back to letters by reversing the encryption a * 26^2 + b * 26 + c
         """
-
-        return str(chr(num))
         # a = int(num % 26)
         # temp = (num - a) // 26
         # b = int(temp % 26)
@@ -137,6 +135,7 @@ class RSA(object):
         #
         # # +97 for 0 index
         # return str(chr(c + 97) + chr(b + 97) + chr(a + 97))
+        return str(chr(num))
 
 
     @staticmethod
@@ -157,12 +156,12 @@ class RSA(object):
         # no factors found,å number is prime
         return True
 
+
 def click_decrypt():
     rsa = RSA()
     rsa.crack(187, 3)
     plaintext_str.set(rsa.decrypt(int(cyphertext_str.get())))
     button_one.config(text="Decrypted")
-
 
 
 gui = tk.Tk()
