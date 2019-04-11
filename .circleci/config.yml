@@ -36,6 +36,7 @@ jobs:
       - run:
           name: Test
           command: |
+            export DISPLAY=:0.0
             python -m pytest tests/
 
 workflows:
