@@ -22,7 +22,6 @@ jobs:
           root: ~/
           paths:
             - repo
-            - "/usr/local/lib/"
 
   test:
     executor: rsa-executor
