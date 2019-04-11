@@ -166,34 +166,33 @@ def click_decrypt():
     button_one.config(text="Decrypted")
 
 
-def start_gui():
-    rsa = RSA()
-    gui = tk.Tk()
-    gui.geometry('600x400+300+300')
-    gui.title("RSA Decrypter")
+gui = tk.Tk()
+gui.geometry('600x400+300+300')
+gui.title("RSA Decrypter")
 
-    button_one = ttk.Button(gui, text="Decrypt", command=click_decrypt)
-    button_one.grid(column=0, row=0, sticky='W')
+button_one = ttk.Button(gui, text="Decrypt", command=click_decrypt)
+button_one.grid(column=0, row=0, sticky='W')
 
-    button_two = ttk.Button(gui, text="Click 2")
-    button_two.grid(column=0, row=1, sticky='W')
+button_two = ttk.Button(gui, text="Click 2")
+button_two.grid(column=0, row=1, sticky='W')
 
-    cyphertext_label = ttk.Label(gui, text="Cyphertext")
-    cyphertext_label.grid(column=0, row=2, columnspan=3)
+cyphertext_label = ttk.Label(gui, text="Cyphertext")
+cyphertext_label.grid(column=0, row=2, columnspan=3)
 
-    cyphertext_str = tk.StringVar(value='183')
-    cyphertext_entry = ttk.Entry(gui, width=50, textvariable=cyphertext_str)
-    cyphertext_entry.grid(column=0, row=3, columnspan=3)
+cyphertext_str = tk.StringVar(value='183')
+cyphertext_entry = ttk.Entry(gui, width=50, textvariable=cyphertext_str)
+cyphertext_entry.grid(column=0, row=3, columnspan=3)
 
-    plaintext_label = ttk.Label(gui, text="Plaintext")
-    plaintext_label.grid(column=0, row=4, columnspan=3)
+plaintext_label = ttk.Label(gui, text="Plaintext")
+plaintext_label.grid(column=0, row=4, columnspan=3)
 
-    plaintext_str = tk.StringVar()
-    plaintext_entry = ttk.Entry(gui, width=50, textvariable=plaintext_str)
-    plaintext_entry.grid(column=0, row=5, columnspan=3)
+plaintext_str = tk.StringVar()
+plaintext_entry = ttk.Entry(gui, width=50, textvariable=plaintext_str)
+plaintext_entry.grid(column=0, row=5, columnspan=3)
 
-    #gui.mainloop()
+#gui.mainloop()
 
-    rsa.crack(187, 3)
-    print(rsa.decrypt("183 137"))
-    button_one.config(text="Decrypted")
+rsa = RSA()
+rsa.crack(187, 3)
+print(rsa.decrypt("183 137"))
+button_one.config(text="Decrypted")
