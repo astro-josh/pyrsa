@@ -15,12 +15,14 @@ jobs:
       - run:
           name: Install
           command: |
+            sudo pip install pytest
             sudo python setup.py install
 
       - persist_to_workspace:
           root: ~/
           paths:
             - repo
+            - "/usr/local/lib/"
 
   test:
     executor: rsa-executor
