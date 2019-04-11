@@ -1,3 +1,4 @@
+import argparse
 from math import sqrt
 import tkinter as tk
 from tkinter import ttk
@@ -211,7 +212,12 @@ def start_gui():
 
 def main():
     # TODO: parse args from command line, add entry point
+    parser = argparse.ArgumentParser()
 
+    parser.add_argument('--gui', '-g', action="store_true", dest='gui',
+                            help='Start GUI.', required=False)
+
+    # TODO: start gui if display set and arg given
     start_gui()
 
 
