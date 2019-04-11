@@ -36,11 +36,11 @@ jobs:
       - run:
           name: Test
           command: |
-            export DISPLAY=:0.0
-            python -m pytest tests/
+            mkdir test-reports
+            python -m pytest tests/ --junitxml=test-reports/junit.xml
 
       - store_test_results:
-          path: test-results
+          path: test-reports
 
 workflows:
   version: 2.1

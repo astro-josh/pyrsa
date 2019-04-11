@@ -2,3 +2,4 @@ __pycache__
 build
 dist
 pyrsa.egg-info
+test-reports
