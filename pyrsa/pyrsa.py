@@ -1,7 +1,8 @@
 from math import sqrt
-#import tkinter import *
 import tkinter as tk
 from tkinter import ttk
+
+__all__ = ['RSA']
 
 class RSA(object):
     def __init__(self, n=None, e=None, d=None, pq=None):
@@ -28,11 +29,16 @@ class RSA(object):
         """
         Wrapper function for decryption process.
         Input:
-        c - ciphertext as a number
+        c - ciphertext: space serperated list of numbers, int or string
         n - (optional) public key value n
         e - (optional) public key value e
         d - (optional) private key value d
         """
+        if isinstance(c, str):
+            c = c.split(" ")
+        elif isinstance(c, int):
+            c = [c]
+
         if self.d:
             print(f"d:{self.d}, n:{self.n}, e:{self.e}")
         elif all([n, e]):
@@ -42,13 +48,12 @@ class RSA(object):
                 " n and e parameters.")
             return
 
-        m = RSA.modular_exponentiation(c, self.d, self.n)
+        numbers = [RSA.modular_exponentiation(int(x), self.d, self.n) for x in c]
 
         print(f"p, q = {self.pq}")
         print(f"d = {self.d}")
-        print(f"m = {m}")
 
-        return RSA.convert_num_to_text(m)
+        return RSA.convert_nums_to_text(numbers)
 
 
     @staticmethod
@@ -89,8 +94,11 @@ class RSA(object):
     def find_prime_factor(num):
         """
         Finds two prime factors for a given number.
-        i.e. two numbers whose product equals the given number.
+        i.e. two prime numbers whose product equals the given number.
         """
+        if num % 2 == 0:
+            return None
+
         prime_numbers = [2]
 
         # TODO: list comprehension
@@ -119,22 +127,16 @@ class RSA(object):
         return result
 
 
-    def convert_to_text(numbers):
-        return [convert_num_to_text(x) for x in numbers]
+    def convert_nums_to_text(numbers):
+        return " ".join([RSA.convert_num_to_text(x) for x in numbers])
 
 
     @staticmethod
     def convert_num_to_text(num):
         """
-        Converts numbers back to letters by reversing the encryption a * 26^2 + b * 26 + c
+        Converts numbers back to letters by reversing the encryption
+        a * 26^2 + b * 26 + c
         """
-        # a = int(num % 26)
-        # temp = (num - a) // 26
-        # b = int(temp % 26)
-        # c = int((temp - b) // 26)
-        #
-        # # +97 for 0 index
-        # return str(chr(c + 97) + chr(b + 97) + chr(a + 97))
         return str(chr(num))
 
 
@@ -188,4 +190,9 @@ plaintext_str = tk.StringVar()
 plaintext_entry = ttk.Entry(gui, width=50, textvariable=plaintext_str)
 plaintext_entry.grid(column=0, row=5, columnspan=3)
 
-gui.mainloop()
+#gui.mainloop()
+
+rsa = RSA()
+rsa.crack(187, 3)
+print(rsa.decrypt("183 137"))
+button_one.config(text="Decrypted")
