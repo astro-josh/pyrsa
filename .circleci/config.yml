@@ -1,0 +1,43 @@
+version: 2.1
+
+executors:
+  rsa-executor:
+    docker:
+      - image: circleci/python:latest
+    working_directory: ~/repo
+
+jobs:
+  build:
+    executor: rsa-executor
+    steps:
+      - checkout
+
+      - run:
+          name: Install
+          command: |
+            python setup.py install
+
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - repo
+
+  test:
+    executor: rsa-executor
+    steps:
+      - attach_workspace:
+          at: ~/
+
+      - run:
+          name: Test
+          command: |
+            python -m pytest tests/
+
+workflows:
+  version: 2.1
+  build-test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
