@@ -155,45 +155,65 @@ class RSA(object):
             if num % x == 0:
                 return False
 
-        # no factors found,å number is prime
+        # no factors found, number is prime
         return True
 
 
 def click_decrypt():
     rsa = RSA()
-    rsa.crack(187, 3)
-    plaintext_str.set(rsa.decrypt(int(cyphertext_str.get())))
-    button_one.config(text="Decrypted")
+    rsa.crack(int(n_str.get()), int(e_str.get()))
+    plaintext_str.set(rsa.decrypt(cyphertext_str.get()))
 
 
 def start_gui():
-    rsa = RSA()
+    global n_str
+    global e_str
+    global plaintext_str
+    global cyphertext_str
+
     gui = tk.Tk()
     gui.geometry('600x400+300+300')
     gui.title("RSA Decrypter")
 
-    button_one = ttk.Button(gui, text="Decrypt", command=click_decrypt)
-    button_one.grid(column=0, row=0, sticky='W')
+    n_label = ttk.Label(gui, text="n")
+    n_label.grid(column=0, row=0, sticky='E')
 
-    button_two = ttk.Button(gui, text="Click 2")
-    button_two.grid(column=0, row=1, sticky='W')
+    n_str = tk.StringVar(value='187')
+    n_entry = ttk.Entry(gui, textvariable=n_str)
+    n_entry.grid(column=1, row=0, sticky='W', columnspan=2)
+
+    e_label = ttk.Label(gui, text="e")
+    e_label.grid(column=0, row=1, sticky='E')
+
+    e_str = tk.StringVar(value='3')
+    e_entry = ttk.Entry(gui, textvariable=e_str)
+    e_entry.grid(column=1, row=1, stick='W', columnspan=2)
+
+    button_one = ttk.Button(gui, text="Decrypt", command=click_decrypt)
+    button_one.grid(column=1, row=2, columnspan=3)
 
     cyphertext_label = ttk.Label(gui, text="Cyphertext")
-    cyphertext_label.grid(column=0, row=2, columnspan=3)
+    cyphertext_label.grid(column=1, row=3, columnspan=3)
 
     cyphertext_str = tk.StringVar(value='183')
-    cyphertext_entry = ttk.Entry(gui, width=50, textvariable=cyphertext_str)
-    cyphertext_entry.grid(column=0, row=3, columnspan=3)
+    cyphertext_entry = ttk.Entry(gui, textvariable=cyphertext_str)
+    cyphertext_entry.grid(column=1, row=4)
 
     plaintext_label = ttk.Label(gui, text="Plaintext")
-    plaintext_label.grid(column=0, row=4, columnspan=3)
+    plaintext_label.grid(column=1, row=5, columnspan=3)
 
     plaintext_str = tk.StringVar()
-    plaintext_entry = ttk.Entry(gui, width=50, textvariable=plaintext_str)
-    plaintext_entry.grid(column=0, row=5, columnspan=3)
+    plaintext_entry = ttk.Entry(gui, textvariable=plaintext_str)
+    plaintext_entry.grid(column=1, row=6, columnspan=3)
 
-    #gui.mainloop()
+    gui.mainloop()
 
-    rsa.crack(187, 3)
-    print(rsa.decrypt("183 137"))
-    button_one.config(text="Decrypted")
+
+def main():
+    # TODO: parse args from command line, add entry point
+
+    start_gui()
+
+
+if (__name__ == '__main__'):
+    main()
