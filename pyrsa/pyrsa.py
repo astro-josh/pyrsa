@@ -243,11 +243,9 @@ def main():
     if args.gui and environ["DISPLAY"] != "":
         start_gui()
     else:
-        #user_input = get_input()
-        #rsa = RSA(n=user_input['n'], e=user_input['e'])
-        #print(rsa.decrypt(user_input['c']))
-        rsa = RSA()
-        print(rsa.decrypt(183, 187, 3))
+        user_input = get_input()
+        rsa = RSA(n=user_input['n'], e=user_input['e'])
+        print(rsa.decrypt(user_input['c']))
 
 
 if (__name__ == '__main__'):
