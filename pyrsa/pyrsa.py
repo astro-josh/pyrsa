@@ -183,8 +183,7 @@ def click_decrypt():
     Gets n, e, and cypher text values from gui entries,
     then decrypts and adds resulting plaintext to entry field.
     """
-    rsa = RSA()
-    rsa.crack(int(n_str.get()), int(e_str.get()))
+    rsa = RSA(int(n_str.get()), int(e_str.get()))
     plaintext_str.set(rsa.decrypt(cyphertext_str.get()))
 
 
