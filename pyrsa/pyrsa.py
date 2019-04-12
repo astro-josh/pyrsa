@@ -14,19 +14,6 @@ class RSA(object):
         self.pq = pq
 
 
-    def crack(self, n, e):
-        """
-        Find private key (d) given public key values (n, e)
-        """
-        self.n = n
-        self.e = e
-
-        self.pq = RSA.find_prime_factor(n)
-        self.d = RSA.extended_euclidean(e, (self.pq[0] - 1) * (self.pq[1] - 1))
-
-        return (self.d, self.pq)
-
-
     def decrypt(self, c, n=None, e=None, d=None):
         """
         Wrapper function for decryption process.
@@ -41,13 +28,19 @@ class RSA(object):
         elif isinstance(c, int):
             c = [c]
 
+        if d:
+            seld.d = d
+
+        if all([n, e]):
+            self.n = n
+            self.e = e
+
         if self.d:
             print(f"d:{self.d}, n:{self.n}, e:{self.e}")
-        elif all([n, e]):
-            self.crack(n, e)
+        elif all([self.n, self.e]):
+            self.d, self.pq = RSA.crack(self.n, self.e)
         else:
-            print("Must call crack(n, e) function first or call decrypt() with"
-                " n and e parameters.")
+            print("Error: n and/or e value(s) not given in construction or method call.")
             return
 
         numbers = [RSA.modular_exponentiation(int(x), self.d, self.n) for x in c]
@@ -56,6 +49,18 @@ class RSA(object):
         print(f"d = {self.d}")
 
         return RSA.convert_nums_to_text(numbers)
+
+
+    @staticmethod
+    def crack(n, e):
+        """
+        Find private key (d) given public key values (n, e)
+        """
+
+        pq = RSA.find_prime_factor(n)
+        d = RSA.extended_euclidean(e, (pq[0] - 1) * (pq[1] - 1))
+
+        return (d, pq)
 
 
     @staticmethod
@@ -161,7 +166,23 @@ class RSA(object):
         return True
 
 
+def get_input():
+    """
+    Get input from user, return dictionary of input.
+    """
+    n = int(input('Enter n value: '))
+    e = int(input('Enter e value: '))
+    c = input('Enter cyphertext (space seperated ints): ')
+
+    return {'n':n, 'e':e, 'c':c}
+
+
 def click_decrypt():
+    """
+    Decrypt button click function.
+    Gets n, e, and cypher text values from gui entries,
+    then decrypts and adds resulting plaintext to entry field.
+    """
     rsa = RSA()
     rsa.crack(int(n_str.get()), int(e_str.get()))
     plaintext_str.set(rsa.decrypt(cyphertext_str.get()))
@@ -212,7 +233,6 @@ def start_gui():
 
 
 def main():
-    # TODO: parse args from command line, add entry point
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--gui', '-g', action="store_true", dest='gui',
@@ -222,7 +242,12 @@ def main():
 
     if args.gui and environ["DISPLAY"] != "":
         start_gui()
-
+    else:
+        #user_input = get_input()
+        #rsa = RSA(n=user_input['n'], e=user_input['e'])
+        #print(rsa.decrypt(user_input['c']))
+        rsa = RSA()
+        print(rsa.decrypt(183, 187, 3))
 
 
 if (__name__ == '__main__'):

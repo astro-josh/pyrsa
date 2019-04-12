@@ -3,10 +3,23 @@ import pytest
 from pyrsa import RSA
 
 class TestRSA(object):
+    def test_rsa_init(self):
+        """
+        Test of the RSA constructor
+        """
+        n = 187
+        e = 3
+        d = 107
+        rsa = RSA(n=n, e=e)
+
+        assert rsa.n == n
+        assert rsa.e == e
+
+
     def test_decrypt(self):
         """
         Test of decryption function
-        Expected: returns string of space seperated decryoted characters
+        Expected: returns string of space seperated decrypted characters
         """
         n = 187
         e = 3
@@ -15,18 +28,29 @@ class TestRSA(object):
         expected_multiple = "H E"
 
         rsa = RSA()
-        rsa.crack(n, e)
+        rsa_vars = RSA(n, e)
+
+        # decrypt with given n and e
+        assert rsa.decrypt(183, n, e) == expected_single
+        assert rsa.decrypt("183", n, e) == expected_single
+        assert rsa.decrypt("183 137", n, e) == expected_multiple
+        assert rsa.decrypt([183, 137], n , e) == expected_multiple
 
         assert rsa.d == expected_d
         assert rsa.n == n
         assert rsa.e == e
         assert rsa.pq == [17, 11]
 
-        assert rsa.decrypt(183) == expected_single
-        assert rsa.decrypt("183") == expected_single
+        # decrypt with n and e given in constructor
+        assert rsa_vars.decrypt(183) == expected_single
+        assert rsa_vars.decrypt("183") == expected_single
+        assert rsa_vars.decrypt("183 137") == expected_multiple
+        assert rsa_vars.decrypt([183, 137]) == expected_multiple
 
-        assert rsa.decrypt("183 137") == expected_multiple
-        assert rsa.decrypt([183, 137]) == expected_multiple
+        assert rsa_vars.d == expected_d
+        assert rsa_vars.n == n
+        assert rsa_vars.e == e
+        assert rsa_vars.pq == [17, 11]
 
 
     def test_euclidean(self):
