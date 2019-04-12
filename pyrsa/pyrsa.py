@@ -1,4 +1,5 @@
 import argparse
+from os import environ
 from math import sqrt
 import tkinter as tk
 from tkinter import ttk
@@ -217,8 +218,11 @@ def main():
     parser.add_argument('--gui', '-g', action="store_true", dest='gui',
                             help='Start GUI.', required=False)
 
-    # TODO: start gui if display set and arg given
-    start_gui()
+    args = parser.parse_args()
+
+    if args.gui and environ["DISPLAY"] != "":
+        start_gui()
+
 
 
 if (__name__ == '__main__'):
