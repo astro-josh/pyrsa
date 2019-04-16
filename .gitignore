@@ -3,3 +3,4 @@ build
 dist
 pyrsa.egg-info
 test-reports
+.pytest_cache
