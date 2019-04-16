@@ -1,0 +1,8 @@
+name: pyrsa
+
+channels:
+  - defaults
+
+dependencies:
+  - pytest
+  - pytest-cov
