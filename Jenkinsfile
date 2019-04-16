@@ -10,7 +10,6 @@ bc0 = new BuildConfig()
 bc0.nodetype = "linux"
 bc0.name = "debug"
 bc0.build_cmds = [
-    "conda env update --file=environment.yml",
     "pip install codecov pytest-cov",
     "with_env -n pyrsa python setup.py install"]
 bc0.test_cmds = [
