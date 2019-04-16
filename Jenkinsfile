@@ -1,14 +1,13 @@
 // Obtain files from source control system.
 if (utils.scm_checkout()) return
 
-
+sh("export PATH=/var/jenkins_home/miniconda3/bin:$PATH")
 
 // Define each build configuration, copying and overriding values as necessary.
 bc0 = new BuildConfig()
 bc0.nodetype = "linux"
 bc0.name = "debug"
 bc0.build_cmds = [
-    "export PATH=/var/jenkins_home/miniconda3/bin:$PATH",
     "conda env update --file=environment.yml",
     "pip install codecov pytest-cov",
     "with_env -n pyrsa python setup.py install"]
