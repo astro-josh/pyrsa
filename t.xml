@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="0" name="pytest" skipped="0" tests="7" time="0.061"><testcase classname="tests.test_pyrsa.TestRSA" file="tests/test_pyrsa.py" line="5" name="test_rsa_init" time="0.001"></testcase><testcase classname="tests.test_pyrsa.TestRSA" file="tests/test_pyrsa.py" line="18" name="test_decrypt" time="0.002"><system-out>p, q = [17, 11]
+<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="0" name="pytest" skipped="0" tests="7" time="0.077"><testcase classname="tests.test_pyrsa.TestRSA" file="tests/test_pyrsa.py" line="5" name="test_rsa_init" time="0.001"></testcase><testcase classname="tests.test_pyrsa.TestRSA" file="tests/test_pyrsa.py" line="18" name="test_decrypt" time="0.002"><system-out>p, q = [17, 11]
 d = 107
 d:107, n:187, e:3
 p, q = [17, 11]
@@ -20,4 +20,4 @@ d = 107
 d:107, n:187, e:3
 p, q = [17, 11]
 d = 107
-</system-out></testcase><testcase classname="tests.test_pyrsa.TestRSA" file="tests/test_pyrsa.py" line="55" name="test_euclidean" time="0.001"></testcase><testcase classname="tests.test_pyrsa.TestRSA" file="tests/test_pyrsa.py" line="69" name="test_find_prime_factors" time="0.001"></testcase><testcase classname="tests.test_pyrsa.TestRSA" file="tests/test_pyrsa.py" line="81" name="test_modular_exponentiation" time="0.000"></testcase><testcase classname="tests.test_pyrsa.TestRSA" file="tests/test_pyrsa.py" line="94" name="test_convert_nums_to_text" time="0.000"></testcase><testcase classname="tests.test_pyrsa.TestRSA" file="tests/test_pyrsa.py" line="105" name="test_is_primt" time="0.001"></testcase></testsuite>
+</system-out></testcase><testcase classname="tests.test_pyrsa.TestRSA" file="tests/test_pyrsa.py" line="55" name="test_euclidean" time="0.001"></testcase><testcase classname="tests.test_pyrsa.TestRSA" file="tests/test_pyrsa.py" line="69" name="test_find_prime_factors" time="0.001"></testcase><testcase classname="tests.test_pyrsa.TestRSA" file="tests/test_pyrsa.py" line="81" name="test_modular_exponentiation" time="0.001"></testcase><testcase classname="tests.test_pyrsa.TestRSA" file="tests/test_pyrsa.py" line="94" name="test_convert_nums_to_text" time="0.001"></testcase><testcase classname="tests.test_pyrsa.TestRSA" file="tests/test_pyrsa.py" line="105" name="test_is_primt" time="0.001"></testcase></testsuite>
