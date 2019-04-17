@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="0" name="pytest" skipped="0" tests="7" time="0.043"><testcase classname="tests.test_pyrsa.TestRSA" name="test_rsa_init" time="0.001"></testcase><testcase classname="tests.test_pyrsa.TestRSA" name="test_decrypt" time="0.002"><system-out>p, q = [17, 11]
+<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="0" name="pytest" skipped="0" tests="7" time="0.042"><testcase classname="tests.test_pyrsa.TestRSA" name="test_rsa_init" time="0.001"></testcase><testcase classname="tests.test_pyrsa.TestRSA" name="test_decrypt" time="0.001"><system-out>p, q = [17, 11]
 d = 107
 d:107, n:187, e:3
 p, q = [17, 11]

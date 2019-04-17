@@ -103,7 +103,7 @@ class TestRSA(object):
         assert RSA.convert_nums_to_text(numbers) == expected
 
 
-    def test_is_primt(self):
+    def test_is_prime(self):
         """
         Test of is prime function.
         Exepected: returns true if given number is prime, false otherwise
