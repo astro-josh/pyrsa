@@ -57,10 +57,13 @@ class RSA(object):
         Find private key (d) given public key values (n, e)
         """
 
-        pq = RSA.find_prime_factor(n)
-        d = RSA.extended_euclidean(e, (pq[0] - 1) * (pq[1] - 1))
-
-        return (d, pq)
+        pq = RSA.find_prime_factors(n)
+        if pq:
+            d = RSA.extended_euclidean(e, (pq[0] - 1) * (pq[1] - 1))
+            return (d, pq)
+        else:
+            print(f"No prime factors found for {n}")
+            exit(0)
 
 
     @staticmethod
@@ -98,7 +101,7 @@ class RSA(object):
 
 
     @staticmethod
-    def find_prime_factor(num):
+    def find_prime_factors(num):
         """
         Finds two prime factors for a given number.
         i.e. two prime numbers whose product equals the given number.
@@ -135,6 +138,9 @@ class RSA(object):
 
 
     def convert_nums_to_text(numbers):
+        """
+        Converts list of asci char numbers to text.
+        """
         return " ".join([RSA.convert_num_to_text(x) for x in numbers])
 
 
@@ -166,17 +172,6 @@ class RSA(object):
         return True
 
 
-def get_input():
-    """
-    Get input from user, return dictionary of input.
-    """
-    n = int(input('Enter n value: '))
-    e = int(input('Enter e value: '))
-    c = input('Enter cyphertext (space seperated ints): ')
-
-    return {'n':n, 'e':e, 'c':c}
-
-
 def click_decrypt():
     """
     Decrypt button click function.
@@ -188,6 +183,9 @@ def click_decrypt():
 
 
 def start_gui():
+    """
+    Starts a tkinter GUI.
+    """
     global n_str
     global e_str
     global plaintext_str
@@ -229,6 +227,39 @@ def start_gui():
     plaintext_entry.grid(column=1, row=6, columnspan=3)
 
     gui.mainloop()
+
+
+def get_valid_input(prompt, type_ = None, min = None, max = None):
+    """
+    Input validation helper function
+    """
+    if min is not None and max is not None and max < min:
+        raise ValueError("Min must be less than or equal to max.")
+    while True:
+        user_input = input(prompt)
+        if type_ is not None:
+            try:
+                user_input = type_(user_input)
+            except ValueError:
+                print("Input type must be {0}.".format(type_.__name__))
+                continue
+        if max is not None and user_input > max:
+            print("Input must be less than or equal to {0}.".format(max))
+        elif min is not None and user_input < min:
+            print("Input must be greater than or equal to {0}.".format(min))
+        else:
+            return user_input
+
+
+def get_input():
+    """
+    Get input from user, return dictionary of input.
+    """
+    n = get_valid_input("Enter n value: ", type_=int)
+    e = get_valid_input("Enter e value: ", type_=int)
+    c = get_valid_input("Enter cyphertext (space seperated ints): ", type_=str)
+
+    return {'n':n, 'e':e, 'c':c}
 
 
 def main():

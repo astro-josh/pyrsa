@@ -75,8 +75,8 @@ class TestRSA(object):
         expected = [23, 5]
         num = expected[0] * expected[1]
 
-        assert RSA.find_prime_factor(num) == expected
-        assert RSA.find_prime_factor(200) == None
+        assert RSA.find_prime_factors(num) == expected
+        assert RSA.find_prime_factors(200) == None
 
 
     def test_modular_exponentiation(self):
