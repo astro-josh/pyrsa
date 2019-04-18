@@ -1,4 +1,4 @@
-# RSA-Py
+# PyRSA
 
 [![CircleCI](https://circleci.com/gh/obviousrebel/RSA-Py/tree/master.svg?style=svg)](https://circleci.com/gh/obviousrebel/RSA-Py/tree/master)
 
