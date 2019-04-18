@@ -6,3 +6,5 @@ channels:
 dependencies:
   - pytest
   - pytest-cov
+  - pip:
+    - playsound
