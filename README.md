@@ -1,6 +1,6 @@
 # PyRSA
 
-[![CircleCI](https://circleci.com/gh/obviousrebel/RSA-Py/tree/master.svg?style=svg)](https://circleci.com/gh/obviousrebel/RSA-Py/tree/master)
+[![CircleCI](https://circleci.com/gh/obviousrebel/pyrsa.svg?style=svg)](https://circleci.com/gh/obviousrebel/pyrsa)
 
 Simple RSA Decrypter for n up to 100,000.
 
