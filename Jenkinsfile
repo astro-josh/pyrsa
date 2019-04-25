@@ -1,8 +1,8 @@
-utils.installConda()
+
 
 // Obtain files from source control system.
 if (utils.scm_checkout()) return
-
+utils.installConda()
 
 
 // Define each build configuration, copying and overriding values as necessary.
