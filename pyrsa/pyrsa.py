@@ -1,3 +1,4 @@
+import logging
 import argparse
 from os import environ
 from math import sqrt
@@ -5,6 +6,16 @@ import tkinter as tk
 from tkinter import ttk
 
 __all__ = ['RSA']
+
+logger = logging.getLogger('pyrsa')
+def init_logger():
+    """
+    Initialize logger.
+    """
+    logger.setLevel(logging.INFO)
+    logging.basicConfig()
+    logging.captureWarnings(True)
+
 
 class RSA(object):
     def __init__(self, n=None, e=None, d=None, pq=None):
@@ -36,17 +47,17 @@ class RSA(object):
             self.e = e
 
         if self.d:
-            print(f"d:{self.d}, n:{self.n}, e:{self.e}")
+            logger.info(f"d:{self.d}, n:{self.n}, e:{self.e}")
         elif all([self.n, self.e]):
             self.d, self.pq = RSA.crack(self.n, self.e)
         else:
-            print("Error: n and/or e value(s) not given in construction or method call.")
+            logger.error("Error: n and/or e value(s) not given in construction or method call.")
             return
 
         numbers = [RSA.modular_exponentiation(int(x), self.d, self.n) for x in c]
 
-        print(f"p, q = {self.pq}")
-        print(f"d = {self.d}")
+        logger.info(f"p, q = {self.pq}")
+        logger.info(f"d = {self.d}")
 
         return RSA.convert_nums_to_text(numbers)
 
@@ -62,7 +73,7 @@ class RSA(object):
             d = RSA.extended_euclidean(e, (pq[0] - 1) * (pq[1] - 1))
             return (d, pq)
         else:
-            print(f"No prime factors found for {n}")
+            logger.error(f"No prime factors found for {n}")
             exit(0)
 
 
@@ -241,12 +252,12 @@ def get_valid_input(prompt, type_ = None, min = None, max = None):
             try:
                 user_input = type_(user_input)
             except ValueError:
-                print("Input type must be {0}.".format(type_.__name__))
+                logger.error("Input type must be {0}.".format(type_.__name__))
                 continue
         if max is not None and user_input > max:
-            print("Input must be less than or equal to {0}.".format(max))
+            logger.error("Input must be less than or equal to {0}.".format(max))
         elif min is not None and user_input < min:
-            print("Input must be greater than or equal to {0}.".format(min))
+            logger.error("Input must be greater than or equal to {0}.".format(min))
         else:
             return user_input
 
@@ -263,6 +274,7 @@ def get_input():
 
 
 def main():
+    init_logger()
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--gui', '-g', action="store_true", dest='gui',
